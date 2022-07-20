@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Timers;
 using System.Windows.Navigation;
+using AccaountManager.Classes.Json.Structs;
+using System.ComponentModel.DataAnnotations;
 
 namespace AccaountManager
 {
@@ -30,13 +32,18 @@ namespace AccaountManager
 
         private async void ButtonSaveAccount_Click(object sender, RoutedEventArgs e)
         {
-            if (SteamNameTextBox.Text != "" && SteamLoginTextBox.Text != "" && SteamPasswordTextBox.Text != "")
+            SteamAccount steamAcc = new SteamAccount(SteamNameTextBox.Text,
+            SteamLoginTextBox.Text, SteamPasswordTextBox.Text);
+            var context = new ValidationContext(steamAcc);
+            var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
+
+            if (Validator.TryValidateObject(steamAcc, context, results, true))
             {
-                if(SteamNameTextBox.Text!=savedFileName)
+                if (SteamNameTextBox.Text!=savedFileName)
                 {
                     Classes.SteamAcs.DeleteAccauntInfo(savedFileName);
                 }
-                if (Classes.Json.Converts.WriteSteamAccauntInfo(SteamNameTextBox.Text, SteamLoginTextBox.Text, SteamPasswordTextBox.Text) == 0)
+                if (Classes.Json.Converts.WriteSteamAccauntInfo(steamAcc) == 0)
                 {
                     MessageBox.Show("Данные сохранены", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
@@ -44,7 +51,7 @@ namespace AccaountManager
             }
             else
             {
-                await ShowErrorText("Заполните все поля для аккаунта");
+                await ShowErrorText(results.ToString()); ;
             }
         }
 

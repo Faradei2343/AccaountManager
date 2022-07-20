@@ -39,9 +39,9 @@
             <Button Content="Сохранить" HorizontalAlignment="Center" Width="200" FontSize="16" x:Name="ButtonSaveAccount" 
                         Click="ButtonSaveAccount_Click" Foreground="Black" Background="White"
                     Style="{DynamicResource MaterialDesignFlatButton}"/>
-            <TextBlock x:Name="ErrorTextBlock" Text="Ошибка" HorizontalAlignment="Center" FontSize="14" 
-                           Foreground="Crimson" Visibility="Collapsed"
-                       Style="{DynamicResource MaterialDesignCaptionTextBlock}"/>
+            <TextBlock x:Name="ErrorTextBlock" Text="Ошибка" FontSize="14" 
+                           Foreground="Crimson" Visibility="Collapsed" TextWrapping="Wrap"
+                       Style="{DynamicResource MaterialDesignCaptionTextBlock}" HorizontalAlignment="Center"/>
             </StackPanel>
             </Border>
         </StackPanel>

@@ -40,7 +40,7 @@
                         Click="ButtonSaveAccount_Click" Foreground="Black" Background="White"
                     Style="{DynamicResource MaterialDesignFlatButton}"/>
                     <TextBlock x:Name="ErrorTextBlock" Text="Ошибка" HorizontalAlignment="Center" FontSize="14" 
-                           Foreground="Crimson" Visibility="Collapsed"
+                           Foreground="Crimson" Visibility="Collapsed" TextWrapping="Wrap"
                        Style="{DynamicResource MaterialDesignCaptionTextBlock}"/>
                 </StackPanel>
             </Border>

@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
 using Microsoft.Win32;
 using System.Windows;
+using AccaountManager.Classes.Json.Structs;
 
 namespace AccaountManager.Classes.Json
 {
@@ -50,16 +49,12 @@ namespace AccaountManager.Classes.Json
             }
         }
 
-        static public int WriteSteamAccauntInfo(string name,string login,string password)
+        static public int WriteSteamAccauntInfo(SteamAccount steamAccount)
         {
             try 
             {
-                var steamAccount = new Classes.Json.Structs.SteamAccount();
-                steamAccount.Name = name;
-                steamAccount.Password= password;
-                steamAccount.Login  = login;
                 var jsonOut= JsonConvert.SerializeObject(steamAccount);
-                File.WriteAllText($"../../Accounts/Steam/{name}.json", jsonOut);
+                File.WriteAllText($"../../Accounts/Steam/{steamAccount.Name}.json", jsonOut);
                 return 0;
             }
             catch(Exception ex)
