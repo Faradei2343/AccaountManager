@@ -53,6 +53,6 @@
         </StackPanel>
         <Button Content="Настройки" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
                 BorderBrush="White" Foreground="Black"
-                Style="{DynamicResource MaterialDesignFlatLightButton}"/>
+                Style="{DynamicResource MaterialDesignFlatLightButton}" Click="Button_Click"/>
     </Grid>
 </Window>

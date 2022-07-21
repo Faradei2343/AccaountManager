@@ -5,8 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccaountManager.Forms"
         mc:Ignorable="d"
-        Title="Settings" Height="450" Width="800">
+        Title="Settings" 
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        MaxHeight="500"
+        MaxWidth="400"
+        MinHeight="400"
+        MinWidth="300"
+        TextElement.FontSize="14"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto" 
+        Closing="Window_Closing" Loaded="Window_Loaded">
     <Grid>
-        
+        <StackPanel>
+            <DockPanel x:Name="TopDockPanel" MouseLeftButtonDown="TopDockPanel_MouseLeftButtonDown">
+                <TextBlock Text="Настройки" Style="{DynamicResource MaterialDesignCaptionTextBlock}" FontSize="16" Margin="5,0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,0">
+                    <Button Content="-" x:Name="HideButton" HorizontalAlignment="Right" Margin="5,0" Background="Crimson" FontSize="18" Click="HideButton_Click"/>
+                    <Button Content="x" x:Name="CloseButton" HorizontalAlignment="Right" Background="Crimson" FontSize="18" Click="CloseButton_Click" />
+                </StackPanel>
+            </DockPanel>
+            <Border BorderBrush="Black" Opacity="0.7" BorderThickness="0.5" Margin="0,5,0,0"/>
+            <Border BorderBrush="Black" Opacity="0.7" BorderThickness="0.5" Margin="0,5,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Путь Steam.exe:" Padding="5" Margin="5" Grid.Row="0" Grid.Column="0"/>
+                    <TextBox x:Name="SteamPathBox" Style="{DynamicResource MaterialDesignComboBoxEditableTextBox}" Text="steam.exe" Grid.Row="0" Grid.Column="1" 
+                    VerticalContentAlignment="Center" Padding="5" Margin="5" IsEnabled="False"/>
+                    <Button x:Name="ButtonSteamPath" Content="..." Grid.Column="2" Style="{DynamicResource MaterialDesignFlatButton}" Click="ButtonSteamPath_Click"/>
+                    <Label Content="Запускать вместе с Windows" Padding="5" Margin="5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                    <CheckBox x:Name="CheckBoxStartWithWin" IsChecked="False" Grid.Column="2" Grid.Row="1" Checked="CheckBoxStartWithWin_Checked" Unchecked="CheckBoxStartWithWin_Unchecked"/>
+                </Grid>
+            </Border>
+        </StackPanel>
     </Grid>
 </Window>

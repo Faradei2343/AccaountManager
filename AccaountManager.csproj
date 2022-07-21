@@ -85,9 +85,8 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Classes\Json\Structs\SteamAccount.cs" />
-    <Compile Include="Classes\Json\Structs\SteamPathInfoStruct.cs" />
+    <Compile Include="Classes\Json\Structs\Settings.cs" />
     <Compile Include="Classes\Json\Structs\UserSettings.cs" />
-    <Compile Include="Classes\Settings.cs" />
     <Compile Include="Classes\SteamAcs.cs" />
     <Compile Include="Forms\EditAccountWindow.xaml.cs">
       <DependentUpon>EditAccountWindow.xaml</DependentUpon>
@@ -134,7 +133,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="LauncherPaths\SteamPathInfo.json" />
+    <None Include="LauncherPaths\Settings.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

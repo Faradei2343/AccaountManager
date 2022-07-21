@@ -27,36 +27,48 @@ namespace AccaountManager
         public MainWindow()
         {
             InitializeComponent();
-            GetSteamPath();
+            GetSettings();
             FillSteamAcsCombobox();
         }
 
 
        
 
-       private async void GetSteamPath()
+       private async void GetSettings()
        {
-            var json =await Classes.Json.Converts.CheckSteamJsonPath();
-            var steamJsonPath = JsonConvert.DeserializeObject<Classes.Json.Structs.SteamPathInfoStruct>(json);
-            if(steamJsonPath.Path=="")
+            var json =await Classes.Json.Converts.ReadAppSettings();
+            var settings = JsonConvert.DeserializeObject<Classes.Json.Structs.Settings>(json);
+            if(settings.Path=="")
             {
                 if(MessageBox.Show("Не найден путь к файлу steam.exe. Вы хотите указать его?", "Внимание!", 
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    switch (Classes.Json.Converts.WriteSteamPathInfo(json))
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    if (openFileDialog.ShowDialog() == true)
                     {
-                        case 0:
-                            MessageBox.Show("Данные сохранены","Успех",MessageBoxButton.OK,MessageBoxImage.Information);
-                            break;
-                        case 1:
-                            SteamPanel.Visibility = Visibility.Collapsed;
-                            break;
+                        settings.Path=openFileDialog.FileName;
+                        switch (Classes.Json.Converts.WriteAppSettings(settings))
+                        {
+                            case 0:
+                                MessageBox.Show("Данные сохранены", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                                break;
+                            case 1:
+                                SteamPanel.Visibility = Visibility.Collapsed;
+                                break;
+                        }
                     }
-                    
+                    else
+                    {
+                        SteamPanel.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else
+                {
+                    SteamPanel.Visibility = Visibility.Collapsed;
                 }
             }
 
-        }
+       }
 
         private void FillSteamAcsCombobox()
         {
@@ -176,6 +188,13 @@ namespace AccaountManager
         private void TopDockPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Forms.Settings settings=new Forms.Settings();
+            this.Close();
+            settings.Show();
         }
     }
 }

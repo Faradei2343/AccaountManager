@@ -7,9 +7,14 @@ using Newtonsoft.Json;
 
 namespace AccaountManager.Classes.Json.Structs
 {
-    public struct SteamPathInfoStruct
+    public struct Settings
     {
         [JsonProperty("path")]
+        [JsonRequired]
         public string Path { get; set; }
+
+        [JsonProperty("startWithWindows")]
+        [JsonRequired]
+        public bool StartWithWindows { get; set; }
     }
 }

@@ -6,12 +6,13 @@ using Newtonsoft.Json;
 using Microsoft.Win32;
 using System.Windows;
 using AccaountManager.Classes.Json.Structs;
+using System.Reflection;
 
 namespace AccaountManager.Classes.Json
 {
     public class Converts
     {
-        static public async Task<string> CheckSteamJsonPath()
+        static public async Task<string> ReadAppSettings()
         {
             var json = string.Empty;
             using (var fileStream = File.OpenRead("../../LauncherPaths/SteamPathInfo.json"))
@@ -24,25 +25,26 @@ namespace AccaountManager.Classes.Json
             }
         }
 
-        static public int WriteSteamPathInfo(string json)
+        static public int WriteAppSettings(Settings settings)
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                var steamJsonPath = JsonConvert.DeserializeObject<Structs.SteamPathInfoStruct>(json);
-                if (openFileDialog.ShowDialog() == true)
+                var jsonOut = JsonConvert.SerializeObject(settings);
+                File.WriteAllText("../../LauncherPaths/SteamPathInfo.json", jsonOut);
+                if (settings.StartWithWindows == true)
                 {
-                    steamJsonPath.Path = openFileDialog.FileName;
-                    var jsonOut = JsonConvert.SerializeObject(steamJsonPath);
-                    File.WriteAllText("../../LauncherPaths/SteamPathInfo.json", jsonOut);
-                    return 0;
+                    RegistryKey rkApp = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+                    rkApp.SetValue("AccauntManager", Assembly.GetExecutingAssembly().Location);
                 }
                 else
                 {
-                    return 1;
+                    RegistryKey rkApp = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+                    rkApp.DeleteValue("AccauntManager");
                 }
+                   
+                return 0;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
                 return 99;
@@ -78,7 +80,7 @@ namespace AccaountManager.Classes.Json
                 return steamAccount;
         }
 
-        static public Structs.SteamPathInfoStruct ReadSteamPath()
+        static public Structs.Settings ReadSteamPath()
         {
             var json = string.Empty;
             using (var fileStream = File.OpenRead("../../LauncherPaths/SteamPathInfo.json"))
@@ -88,7 +90,7 @@ namespace AccaountManager.Classes.Json
                     json = streamReader.ReadToEnd();
                 }
             }
-            var steamPath=JsonConvert.DeserializeObject<Structs.SteamPathInfoStruct>(json);
+            var steamPath=JsonConvert.DeserializeObject<Structs.Settings>(json);
             return steamPath;
         }
     }
